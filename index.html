@@ -18,7 +18,11 @@ body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-
 .wrap{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
 h1{font-family:var(--display);font-weight:700;font-size:clamp(28px,5vw,42px);line-height:1.1;margin:0;text-wrap:balance}
 .lead{color:var(--muted);margin:0;max-width:62ch}
-.stage3d{position:relative;width:100%;height:min(460px,70vw);min-height:300px;border-radius:14px;overflow:hidden;background:#2a2622;border:1px solid var(--line)}
+.viz{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:16px;align-items:stretch}
+@media (max-width:720px){.viz{grid-template-columns:1fr}}
+.sect{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;align-items:center;min-width:0}
+.sect svg{display:block;width:100%;height:auto;max-height:480px}
+.stage3d{position:relative;width:100%;height:100%;min-height:380px;border-radius:14px;overflow:hidden;background:#2a2622;border:1px solid var(--line)}
 .stage3d canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
 .hint3d{position:absolute;left:12px;bottom:10px;font-size:12px;color:#F1EFE8;opacity:.8;pointer-events:none}
 .stage{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;overflow-x:auto}
@@ -44,7 +48,40 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(28px,5vw,42px);lin
   <h1>Perforowana roleta z obrazem</h1>
   <p class="lead">Dwa wałki w jednej kasecie: od pokoju perforacja z mlecznym podkładem, od szyby blackout. Montaż we wnęce okiennej, boczne szyny, magnesy w parapecie.</p>
   <figure class="film"><video id="film" src="roleta22.mp4" autoplay muted loop playsinline controls preload="auto"></video></figure>
+  <div class="viz">
   <div class="stage3d" id="wrap3d"><div class="hint3d">Przeciągnij, żeby obrócić · kółko myszy lub dwa palce, żeby przybliżyć</div></div>
+  <div class="sect"><svg viewBox="340 14 340 496" role="img" aria-label="Przekrój montażu we wnęce"><defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<text class="ts" x="445" y="28" text-anchor="middle">Przekrój – montaż we wnęce</text>
+<rect x="360" y="40" width="170" height="50" fill="#B4B2A9"/>
+<rect x="360" y="380" width="170" height="40" fill="#B4B2A9"/>
+<rect x="380" y="90" width="12" height="290" fill="#D3D1C7" stroke="#888780" stroke-width="0.5"/>
+<rect x="392" y="92" width="10" height="280" fill="#D3D1C7" stroke="#888780" stroke-width="0.5"/><rect x="395" y="100" width="4" height="264" fill="#85B7EB"/>
+<rect x="392" y="372" width="153" height="8" fill="#F1EFE8" stroke="#888780" stroke-width="0.5"/>
+<rect x="486" y="126" width="24" height="246" fill="none" stroke="var(--line)" stroke-width="0.8" stroke-dasharray="3 3"/>
+<rect id="sGl" x="492" y="126" width="10" height="0" fill="#FAC775" opacity="0"/>
+<rect id="sLed" x="494" y="122" width="8" height="4" fill="#888780"/>
+<rect x="470" y="90" width="54" height="32" rx="3" fill="#444441"/>
+<circle cx="482" cy="106" r="10" fill="#888780"/>
+<circle cx="510" cy="106" r="10" fill="#BA7517"/>
+<line id="sB" x1="490" y1="126" x2="490" y2="126" stroke="#1E1D1B" stroke-width="3"/>
+<line id="sD" x1="503" y1="126" x2="503" y2="126" stroke="#E9E5DC" stroke-width="3"/>
+<line id="sP" x1="506" y1="126" x2="506" y2="126" stroke="#BA7517" stroke-width="3" stroke-dasharray="5 3"/>
+<rect id="sbB" x="485" y="124" width="10" height="4" fill="#5F5E5A"/>
+<rect id="sbF" x="500" y="124" width="10" height="4" fill="#5F5E5A"/>
+<rect id="smB" x="486" y="369" width="8" height="3" fill="#888780"/>
+<rect id="smF" x="501" y="369" width="8" height="3" fill="#888780"/>
+<line id="sun1" x1="346" y1="200" x2="376" y2="200" stroke="#EF9F27" stroke-width="2" marker-end="url(#arrow)"/>
+<line id="sun2" x1="346" y1="260" x2="376" y2="260" stroke="#EF9F27" stroke-width="2" marker-end="url(#arrow)"/>
+<line class="leader" x1="524" y1="104" x2="540" y2="104"/><text class="ts" x="546" y="100">Kaseta 9 × 6 cm<tspan x="546" dy="16">2 wałki, 2 silniki</tspan></text>
+<line class="leader" x1="490" y1="180" x2="540" y2="180"/><text class="ts" x="546" y="176">Blackout<tspan x="546" dy="16">(od szyby)</tspan></text>
+<line class="leader" x1="507" y1="260" x2="540" y2="260"/><text class="ts" x="546" y="256">Obraz z mlecznym<tspan x="546" dy="16">podkładem (od pokoju)</tspan></text>
+<line class="leader" x1="510" y1="370" x2="540" y2="354"/><text class="ts" x="546" y="358">Magnesy w parapecie</text>
+<line x1="404" y1="446" x2="468" y2="446" stroke="var(--muted)" stroke-width="1" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+<text class="ts" x="436" y="464" text-anchor="middle">~11 cm na uchył okna</text>
+<line x1="394" y1="478" x2="528" y2="478" stroke="var(--muted)" stroke-width="1" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+<text class="ts" x="461" y="497" text-anchor="middle">wnęka ~23 cm</text>
+</svg></div>
+  </div>
   <div class="btns" id="b3">
     <button id="m-dzien" data-m="dzien">Dzień (bez rolety)</button><button id="m-obraz" data-m="obraz">Obraz</button><button id="m-ciemno" data-m="ciemno">Pełne zaciemnienie</button><button id="led3">LED</button><button id="cut3">Pokaż wnętrze kasety</button>
   </div>
@@ -152,6 +189,12 @@ const up=e=>{pts.delete(e.pointerId);pinch=0;el.style.cursor='grab';};el.addEven
 el.addEventListener('wheel',e=>{e.preventDefault();R=Math.max(1.2,Math.min(5.5,R*(1+e.deltaY*0.001)));},{passive:false});
 let last=performance.now();const SP=0.45;
 function step(v,t,s){return v+Math.sign(t-v)*Math.min(Math.abs(t-v),s);}
+function sect(){const L=246,yb=126+cur.b*L,yf=126+cur.f*L,$=i=>document.getElementById(i);
+$('sB').setAttribute('y2',yb);$('sD').setAttribute('y2',yf);$('sP').setAttribute('y2',yf);
+$('sbB').setAttribute('y',Math.min(yb,368)-2);$('sbF').setAttribute('y',Math.min(yf,368)-2);
+$('smB').setAttribute('fill',cur.b>0.995?'#EF9F27':'#888780');$('smF').setAttribute('fill',cur.f>0.995?'#EF9F27':'#888780');
+$('sLed').setAttribute('fill',cur.l>0.5?'#EF9F27':'#888780');$('sGl').setAttribute('height',cur.f*L);$('sGl').setAttribute('opacity',(0.6*cur.l).toFixed(2));
+const sunOp=(1-0.9*cur.b).toFixed(2);$('sun1').setAttribute('opacity',sunOp);$('sun2').setAttribute('opacity',sunOp);}
 function loop(now){const dt=Math.min(0.05,(now-last)/1000);last=now;
 let tf=tgt.f,tb=tgt.b;
 if(tb>cur.b&&cur.f<0.98)tb=cur.b;
@@ -159,7 +202,7 @@ if(tf<cur.f&&cur.b>0.02)tf=cur.f;
 const of=cur.f,ob=cur.b;cur.f=step(cur.f,tf,SP*dt);cur.b=step(cur.b,tb,SP*dt);
 cur.l=step(cur.l,tgt.l*(cur.b>0.98?1:0),1.2*dt);
 tubeF.rotation.x+=(cur.f-of)*40;tubeB.rotation.x+=(cur.b-ob)*40;
-apply();placeCam();renderer.render(scene,cam);requestAnimationFrame(loop);}
+apply();sect();placeCam();renderer.render(scene,cam);requestAnimationFrame(loop);}
 new ResizeObserver(()=>{renderer.setSize(W(),Hh());cam.aspect=W()/Hh();cam.updateProjectionMatrix();}).observe(wrap);
 setMode('dzien');requestAnimationFrame(loop);
 </script>
