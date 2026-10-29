@@ -19,10 +19,10 @@ body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-
 h1{font-family:var(--display);font-weight:700;font-size:clamp(28px,5vw,42px);line-height:1.1;margin:0;text-wrap:balance}
 .lead{color:var(--muted);margin:0;max-width:62ch}
 .viz{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:16px;align-items:stretch}
-@media (max-width:720px){.viz{grid-template-columns:1fr}}
+@media (max-width:720px){.viz{grid-template-columns:1fr}.stage3d{height:360px!important}}
 .sect{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;align-items:center;min-width:0}
 .sect svg{display:block;width:100%;height:auto;max-height:480px}
-.stage3d{position:relative;width:100%;height:100%;min-height:380px;border-radius:14px;overflow:hidden;background:#2a2622;border:1px solid var(--line)}
+.stage3d{position:relative;width:100%;height:460px;border-radius:14px;overflow:hidden;background:#2a2622;border:1px solid var(--line)}
 .stage3d canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
 .hint3d{position:absolute;left:12px;bottom:10px;font-size:12px;color:#F1EFE8;opacity:.8;pointer-events:none}
 .stage{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;overflow-x:auto}
@@ -98,7 +98,7 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(28px,5vw,42px);lin
 const wrap=document.getElementById('wrap3d');
 const W=()=>wrap.clientWidth,Hh=()=>wrap.clientHeight;
 const renderer=new THREE.WebGLRenderer({antialias:true});
-renderer.setPixelRatio(Math.min(2,window.devicePixelRatio||1));renderer.setSize(W(),Hh());
+renderer.setPixelRatio(Math.min(2,window.devicePixelRatio||1));renderer.setSize(W(),Hh(),false);
 wrap.prepend(renderer.domElement);
 const scene=new THREE.Scene();
 const cam=new THREE.PerspectiveCamera(40,W()/Hh(),0.05,50);
@@ -203,7 +203,7 @@ const of=cur.f,ob=cur.b;cur.f=step(cur.f,tf,SP*dt);cur.b=step(cur.b,tb,SP*dt);
 cur.l=step(cur.l,tgt.l*(cur.b>0.98?1:0),1.2*dt);
 tubeF.rotation.x+=(cur.f-of)*40;tubeB.rotation.x+=(cur.b-ob)*40;
 apply();sect();placeCam();renderer.render(scene,cam);requestAnimationFrame(loop);}
-new ResizeObserver(()=>{renderer.setSize(W(),Hh());cam.aspect=W()/Hh();cam.updateProjectionMatrix();}).observe(wrap);
+new ResizeObserver(()=>{renderer.setSize(W(),Hh(),false);cam.aspect=W()/Hh();cam.updateProjectionMatrix();}).observe(wrap);
 setMode('dzien');requestAnimationFrame(loop);
 </script>
 </body>
