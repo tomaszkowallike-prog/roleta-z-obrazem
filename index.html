@@ -206,11 +206,11 @@ const sun=new THREE.DirectionalLight(0xfff1d6,0.9);sun.position.set(1.5,3,3);sce
 const ledLight=new THREE.PointLight(0xffb85c,0,4,2);ledLight.position.set(0,0.8,0.45);scene.add(ledLight);
 const M=(c,o={})=>new THREE.MeshStandardMaterial(Object.assign({color:c,roughness:.85,metalness:0},o));
 function box(w,h,d,mat,x,y,z){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);m.position.set(x,y,z);scene.add(m);return m;}
-const wallM=M(0xE8E4DC);const D=0.25;
+const wallM=M(0x7E8C86);const D=0.25;
 box(1.6,3.4,D,wallM,-1.5,0.8,-D/2);box(1.6,3.4,D,wallM,1.5,0.8,-D/2);
 box(1.4,0.9,D,wallM,0,2.05,-D/2);box(1.4,0.9,D,wallM,0,-0.45,-D/2);
 const floor=new THREE.Mesh(new THREE.PlaneGeometry(6,4),M(0x8B6B4A));floor.rotation.x=-Math.PI/2;floor.position.set(0,-0.9,1.6);scene.add(floor);
-const frameM=M(0xD3D1C7,{roughness:.5});
+const frameM=M(0x3E4348,{roughness:.5});
 box(1.4,0.05,0.07,frameM,0,1.575,-0.2);box(1.4,0.05,0.07,frameM,0,0.025,-0.2);box(0.05,1.6,0.07,frameM,-0.675,0.8,-0.2);box(0.05,1.6,0.07,frameM,0.675,0.8,-0.2);
 const sc=document.createElement('canvas');sc.width=512;sc.height=512;const sx=sc.getContext('2d');
 sx.fillStyle='#9CCBEB';sx.fillRect(0,0,512,512);sx.fillStyle='#FAC775';sx.beginPath();sx.arc(380,120,46,0,7);sx.fill();
@@ -315,10 +315,10 @@ const sun=new THREE.DirectionalLight(0xfff1d6,.9);sun.position.set(1.5,3,3);scen
 const ledL=new THREE.PointLight(0xffb85c,0,4,2);ledL.position.set(0,.8,.45);scene.add(ledL);
 const M=(c,o={})=>new THREE.MeshStandardMaterial(Object.assign({color:c,roughness:.85},o));
 function box(w,h,d,m,x,y,z){const o=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),m);o.position.set(x,y,z);scene.add(o);return o;}
-const wallM=M(0xE8E4DC),D=.25;
+const wallM=M(0x7E8C86),D=.25;
 box(1.6,3.4,D,wallM,-1.5,.8,-D/2);box(1.6,3.4,D,wallM,1.5,.8,-D/2);box(1.4,.9,D,wallM,0,2.05,-D/2);box(1.4,.9,D,wallM,0,-.45,-D/2);
 const fl=new THREE.Mesh(new THREE.PlaneGeometry(6,4),M(0x8B6B4A));fl.rotation.x=-Math.PI/2;fl.position.set(0,-.9,1.6);scene.add(fl);
-const frM=M(0xD3D1C7,{roughness:.5});box(1.4,.05,.07,frM,0,1.575,-.2);box(1.4,.05,.07,frM,0,.025,-.2);box(.05,1.6,.07,frM,-.675,.8,-.2);box(.05,1.6,.07,frM,.675,.8,-.2);
+const frM=M(0x3E4348,{roughness:.5});box(1.4,.05,.07,frM,0,1.575,-.2);box(1.4,.05,.07,frM,0,.025,-.2);box(.05,1.6,.07,frM,-.675,.8,-.2);box(.05,1.6,.07,frM,.675,.8,-.2);
 const sc=document.createElement('canvas');sc.width=sc.height=512;const sx=sc.getContext('2d');
 sx.fillStyle='#9CCBEB';sx.fillRect(0,0,512,512);sx.fillStyle='#FAC775';sx.beginPath();sx.arc(380,120,46,0,7);sx.fill();
 sx.fillStyle='#B4B2A9';sx.fillRect(70,250,60,170);sx.fillStyle='#D3D1C7';sx.fillRect(300,290,46,130);sx.fillStyle='#639922';sx.fillRect(0,400,512,112);
@@ -432,10 +432,10 @@ const sun=new THREE.DirectionalLight(0xfff1d6,.9);sun.position.set(1.5,3,3);scen
 const ledL=new THREE.PointLight(0xffb85c,0,4,2);ledL.position.set(0,.8,.45);scene.add(ledL);
 const M=(c,o={})=>new THREE.MeshStandardMaterial(Object.assign({color:c,roughness:.85},o));
 function box(w,h,d,m,x,y,z,par){const o=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),m);o.position.set(x,y,z);(par||scene).add(o);return o;}
-const wallM=M(0xE8E4DC),D=.25;
+const wallM=M(0x7E8C86),D=.25;
 box(1.6,3.4,D,wallM,-1.5,.8,-D/2);box(1.6,3.4,D,wallM,1.5,.8,-D/2);box(1.4,.9,D,wallM,0,2.05,-D/2);box(1.4,.9,D,wallM,0,-.45,-D/2);
 const fl=new THREE.Mesh(new THREE.PlaneGeometry(6,4),M(0x8B6B4A));fl.rotation.x=-Math.PI/2;fl.position.set(0,-.9,1.6);scene.add(fl);
-const frM=M(0xD3D1C7,{roughness:.5});box(1.4,.05,.07,frM,0,1.575,-.2);box(1.4,.05,.07,frM,0,.025,-.2);box(.05,1.6,.07,frM,-.675,.8,-.2);box(.05,1.6,.07,frM,.675,.8,-.2);
+const frM=M(0x3E4348,{roughness:.5});box(1.4,.05,.07,frM,0,1.575,-.2);box(1.4,.05,.07,frM,0,.025,-.2);box(.05,1.6,.07,frM,-.675,.8,-.2);box(.05,1.6,.07,frM,.675,.8,-.2);
 const sc=document.createElement('canvas');sc.width=sc.height=512;const sx=sc.getContext('2d');
 sx.fillStyle='#9CCBEB';sx.fillRect(0,0,512,512);sx.fillStyle='#FAC775';sx.beginPath();sx.arc(380,120,46,0,7);sx.fill();
 sx.fillStyle='#B4B2A9';sx.fillRect(70,250,60,170);sx.fillStyle='#D3D1C7';sx.fillRect(300,290,46,130);sx.fillStyle='#639922';sx.fillRect(0,400,512,112);
@@ -540,17 +540,17 @@ const sun=new THREE.DirectionalLight(0xfff1d6,.9);sun.position.set(1.5,3,3);scen
 const ledL=new THREE.PointLight(0xffb85c,0,4,2);ledL.position.set(0,.8,.6);scene.add(ledL);
 const M=(c,o={})=>new THREE.MeshStandardMaterial(Object.assign({color:c,roughness:.85},o));
 function box(w,h,d,m,x,y,z,par){const o=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),m);o.position.set(x,y,z);(par||scene).add(o);return o;}
-const wallM=M(0xE8E4DC),D=.25;
+const wallM=M(0x7E8C86),D=.25;
 box(1.6,3.4,D,wallM,-1.5,.8,-D/2);box(1.6,3.4,D,wallM,1.5,.8,-D/2);box(1.4,.9,D,wallM,0,2.05,-D/2);box(1.4,.9,D,wallM,0,-.45,-D/2);
 const fl=new THREE.Mesh(new THREE.PlaneGeometry(6,4),M(0x8B6B4A));fl.rotation.x=-Math.PI/2;fl.position.set(0,-.9,1.6);scene.add(fl);
 const sky=new THREE.Mesh(new THREE.PlaneGeometry(3.2,3.2),new THREE.MeshBasicMaterial({map:skyTex()}));sky.position.set(0,.8,-1.4);scene.add(sky);
-const frM=M(0xF1EFE8,{roughness:.5});
+const frM=M(0x3E4348,{roughness:.5});
 box(1.4,.05,.07,frM,0,1.575,-.035);box(1.4,.05,.07,frM,0,.025,-.035);box(.05,1.6,.07,frM,-.675,.8,-.035);box(.05,1.6,.07,frM,.675,.8,-.035);
 const sash=new THREE.Group();sash.position.set(0,.05,-.03);scene.add(sash);
-const sM=M(0xF4F2EC,{roughness:.45});
+const sM=M(0x4A5056,{roughness:.45});
 box(1.3,.06,.06,sM,0,1.47,0,sash);box(1.3,.06,.06,sM,0,.03,0,sash);box(.06,1.5,.06,sM,-.62,.75,0,sash);box(.06,1.5,.06,sM,.62,.75,0,sash);
 const gl=new THREE.Mesh(new THREE.PlaneGeometry(1.18,1.38),new THREE.MeshStandardMaterial({color:0xBFDDF2,transparent:true,opacity:.18,roughness:.1}));gl.position.set(0,.75,0);sash.add(gl);
-box(.025,.12,.03,M(0xD3D1C7,{metalness:.4,roughness:.3}),.62,.8,.045,sash);
+box(.025,.12,.03,M(0xC9CDD1,{metalness:.5,roughness:.3}),.62,.8,.045,sash);
 const P=variant==='A'?{TOP:1.66,H:1.76,BW:1.62,FW:1.58,ZB:.12,ZF:.145,par:scene,baseY:0}:{TOP:1.40,H:1.33,BW:1.16,FW:1.12,ZB:.05,ZF:.064,par:sash,baseY:0};
 const par=P.par;
 const casG=new THREE.Group();par.add(casG);
@@ -559,7 +559,7 @@ if(variant==='A'){casG.position.set(0,1.7,.13);box(1.68,.08,.06,M(0xE8E6E0,{roug
 [-.6,.6].forEach(x=>{const b=box(.04,.03,.11,M(0x888780,{metalness:.4,roughness:.4}),x,1.7,.055);brs.push(b);});
 box(.025,.012,.13,M(0x888780,{metalness:.4}),-.8,-.115,.065,botG);box(.025,.012,.13,M(0x888780,{metalness:.4}),.8,-.115,.065,botG);box(1.64,.012,.04,M(0xD3D1C7),0,-.115,.133,botG);}
 else{casG.position.set(0,1.425,.057);box(1.22,.05,.04,M(0xE8E6E0,{roughness:.5}),0,0,0,casG);
-[-.45,.45].forEach(x=>{const g=new THREE.Group();g.position.set(x,0,0);sash.add(g);box(.05,.008,.075,M(0x888780,{metalness:.4}),0,1.503,.012,g);box(.05,.05,.006,M(0x888780,{metalness:.4}),0,1.48,-.024,g);box(.05,.035,.006,M(0x888780,{metalness:.4}),0,1.49,.048,g);hooks.push(g);});
+[-.45,.45].forEach(x=>{const g=new THREE.Group();g.position.set(x,0,0);sash.add(g);box(.05,.008,.075,M(0xC9CDD1,{metalness:.5}),0,1.503,.012,g);box(.05,.05,.006,M(0xC9CDD1,{metalness:.5}),0,1.48,-.024,g);box(.05,.035,.006,M(0xC9CDD1,{metalness:.5}),0,1.49,.048,g);hooks.push(g);});
 box(1.16,.01,.02,M(0xD3D1C7),0,.065,.058,botG);box(.012,1.32,.01,M(0xF4F2EC),-.585,.73,.05,botG);box(.012,1.32,.01,M(0xF4F2EC),.585,.73,.05,botG);}
 const ledM=new THREE.MeshBasicMaterial({color:0x777770});box(P.FW-.05,.005,.008,ledM,0,variant==='A'?-.041:-.026,variant==='A'?.0:.0,casG);
 const hTex=makeHoles();
@@ -618,8 +618,8 @@ demo('fa','A',[
 {t:'LED – duży obraz nocą',x:'Taśma LED w kasecie podświetla perforację. Świecący obraz wielkości całego okna.',d:6,c:[-1.3,1.0,2.9],g:[0,.8,.1],a:(s,p)=>{s.led=cl(p/.6);}}]);
 demo('fb','B',[
 {t:'Płaskie okno – bez wnęki',x:'To samo płaskie okno. Tym razem roleta zamocowana bezpośrednio na skrzydle.',d:4,c:[1.9,1.0,3.0],g:[0,.8,0],a:(s,p)=>{}},
-{t:'Zaczepy na skrzydło',x:'Dwa zaczepy zahaczasz o górną krawędź skrzydła – bez wiercenia i bez kleju.',d:5,c:[.85,1.8,.95],g:[.3,1.5,0],a:(s,p)=>{s.br=p;}},
-{t:'Cienka kaseta',x:'Cienka kaseta (~4 cm) wpina się w zaczepy. Wałki są cieńsze, ok. 15–17 mm.',d:4.5,c:[.85,1.75,1.0],g:[.3,1.45,.03],a:(s,p)=>{s.cas=p;}},
+{t:'Zaczepy na skrzydło',x:'Dwa zaczepy zahaczasz o górną krawędź skrzydła – bez wiercenia i bez kleju.',d:5,c:[1.15,1.85,1.5],g:[.25,1.45,0],a:(s,p)=>{s.br=p;}},
+{t:'Cienka kaseta',x:'Cienka kaseta (~4 cm) wpina się w zaczepy. Wałki są cieńsze, ok. 15–17 mm.',d:4.5,c:[1.2,1.8,1.6],g:[.2,1.4,.03],a:(s,p)=>{s.cas=p;}},
 {t:'Magnes i cienkie profile',x:'Na dole skrzydła przyklejasz pasek magnetyczny, a po bokach opcjonalnie cienkie profile – też tylko na skrzydle.',d:5,c:[.9,.35,1.0],g:[.35,.1,.02],a:(s,p)=>{s.bot=p;}},
 {t:'Blackout zjeżdża po szybie',x:'Blackout zasłania szybę skrzydła i przyczepia się do magnesu na dole.',d:6,c:[1.5,1.0,2.2],g:[0,.75,0],a:(s,p)=>{s.b=cl(p/.7);}},
 {t:'Obraz zjeżdża z przodu',x:'Roleta z obrazem zjeżdża przed blackoutem – obraz ma wielkość szyby.',d:5.5,c:[1.5,1.0,2.4],g:[0,.75,0],a:(s,p)=>{s.f=cl(p/.75);}},
