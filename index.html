@@ -58,6 +58,17 @@ button.b{font:500 14px var(--body);padding:8px 14px;border-radius:8px;border:1px
 button.b:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 button.b.act{background:var(--accent-soft);border-color:var(--accent)}
 button.b:disabled{opacity:.4;cursor:default}
+h3{font-family:var(--display);font-weight:700;font-size:clamp(18px,2.8vw,22px);margin:0}
+.vhead.inst{margin-top:12px}
+.instStage{height:460px}
+.cap{position:absolute;left:12px;top:12px;max-width:min(360px,calc(100% - 24px));background:rgba(20,18,16,.8);color:#F1EFE8;border-radius:10px;padding:10px 12px;pointer-events:none}
+.cap .n{font-size:12px;opacity:.7;letter-spacing:.04em}
+.cap .tt{font-size:16px;font-weight:500;margin:2px 0 4px}
+.cap .tx{font-size:13px;line-height:1.5;opacity:.92}
+.ibar{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.idots{display:flex;gap:6px;flex:1;min-width:180px}
+.idots span{flex:1;height:6px;border-radius:3px;background:var(--line);cursor:pointer;position:relative;overflow:hidden}
+.idots span i{position:absolute;left:0;top:0;bottom:0;width:0;background:var(--accent)}
 </style>
 </head>
 <body>
@@ -164,6 +175,9 @@ button.b:disabled{opacity:.4;cursor:default}
     <li><b>~1,5–2 kg</b><span>waga całości dla okna 1,4 × 1,6 m</span></li>
     <li><b>bez wiercenia</b><span>drążek rozporowy we wnęce lub 2 uchwyty na klik</span></li>
   </ul>
+  <div class="vhead inst"><h3>Montaż</h3><span class="tag">z opcjonalnie wklejanymi prowadnicami</span></div>
+  <div class="stage3d instStage" id="wInst"><div class="cap" id="iCap"><div class="n" id="iN"></div><div class="tt" id="iT"></div><div class="tx" id="iX"></div></div></div>
+  <div class="ibar"><button class="b" id="iPrev" aria-label="Poprzedni krok">◀</button><button class="b" id="iPlay">Pauza</button><button class="b" id="iNext" aria-label="Następny krok">▶</button><div class="idots" id="iDots"></div></div>
   </section>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -396,6 +410,104 @@ st.l=stp(st.l,(led&&st.f>.98&&st.b>.98)?1:0,1.2*dt);
 apply();sect();camP();R3.render(scene,cam);requestAnimationFrame(loop);}
 new ResizeObserver(()=>{R3.setSize(W(),Hh(),false);cam.aspect=W()/Hh();cam.updateProjectionMatrix();}).observe(wrap);
 sync();requestAnimationFrame(loop);
+})();
+</script>
+<script>
+(function(){
+const wrap=document.getElementById('wInst');const W=()=>wrap.clientWidth,Hh=()=>wrap.clientHeight;
+const R=new THREE.WebGLRenderer({antialias:true});R.setPixelRatio(Math.min(2,window.devicePixelRatio||1));R.setSize(W(),Hh(),false);wrap.prepend(R.domElement);
+const scene=new THREE.Scene();const cam=new THREE.PerspectiveCamera(40,W()/Hh(),0.02,50);
+const amb=new THREE.AmbientLight(0xffffff,.55);scene.add(amb);const hemi=new THREE.HemisphereLight(0xdfeaff,0x6b5540,.35);scene.add(hemi);
+const sun=new THREE.DirectionalLight(0xfff1d6,.9);sun.position.set(1.5,3,3);scene.add(sun);
+const ledL=new THREE.PointLight(0xffb85c,0,4,2);ledL.position.set(0,.8,.45);scene.add(ledL);
+const M=(c,o={})=>new THREE.MeshStandardMaterial(Object.assign({color:c,roughness:.85},o));
+function box(w,h,d,m,x,y,z,par){const o=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),m);o.position.set(x,y,z);(par||scene).add(o);return o;}
+const wallM=M(0xE8E4DC),D=.25;
+box(1.6,3.4,D,wallM,-1.5,.8,-D/2);box(1.6,3.4,D,wallM,1.5,.8,-D/2);box(1.4,.9,D,wallM,0,2.05,-D/2);box(1.4,.9,D,wallM,0,-.45,-D/2);
+const fl=new THREE.Mesh(new THREE.PlaneGeometry(6,4),M(0x8B6B4A));fl.rotation.x=-Math.PI/2;fl.position.set(0,-.9,1.6);scene.add(fl);
+const frM=M(0xD3D1C7,{roughness:.5});box(1.4,.05,.07,frM,0,1.575,-.2);box(1.4,.05,.07,frM,0,.025,-.2);box(.05,1.6,.07,frM,-.675,.8,-.2);box(.05,1.6,.07,frM,.675,.8,-.2);
+const sc=document.createElement('canvas');sc.width=sc.height=512;const sx=sc.getContext('2d');
+sx.fillStyle='#9CCBEB';sx.fillRect(0,0,512,512);sx.fillStyle='#FAC775';sx.beginPath();sx.arc(380,120,46,0,7);sx.fill();
+sx.fillStyle='#B4B2A9';sx.fillRect(70,250,60,170);sx.fillStyle='#D3D1C7';sx.fillRect(300,290,46,130);sx.fillStyle='#639922';sx.fillRect(0,400,512,112);
+sx.fillStyle='#3B6D11';[[90,400,80],[260,410,95],[440,405,85]].forEach(a=>{sx.beginPath();sx.ellipse(a[0],a[1],a[2],48,0,0,7);sx.fill();});
+const sky=new THREE.Mesh(new THREE.PlaneGeometry(3.2,3.2),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(sc)}));sky.position.set(0,.8,-1.4);scene.add(sky);
+const gl=new THREE.Mesh(new THREE.PlaneGeometry(1.3,1.5),new THREE.MeshStandardMaterial({color:0xBFDDF2,transparent:true,opacity:.18,roughness:.1}));gl.position.set(0,.8,-.2);scene.add(gl);
+box(1.5,.025,.27,M(0xF1EFE8,{roughness:.4}),0,-.0125,-.085);
+const TOP=1.53,H=1.53,FW=1.28,BW=1.36,ZF=-.04,ZB=-.075;
+const casG=new THREE.Group();scene.add(casG);
+box(1.4,.08,.075,M(0xE8E6E0,{roughness:.5}),0,0,-.057,casG);
+const tG=new THREE.CylinderGeometry(.012,.012,1.3,20);tG.rotateZ(Math.PI/2);
+const tB=new THREE.Mesh(tG,M(0x2C2C2A));tB.position.set(0,.015,ZB);casG.add(tB);
+const tF=new THREE.Mesh(tG,M(0xBA7517));tF.position.set(0,-.018,ZF);casG.add(tF);
+const ledM=new THREE.MeshBasicMaterial({color:0x777770});box(1.25,.005,.008,ledM,0,-.041,-.057,casG);
+const hc=document.createElement('canvas');hc.width=640;hc.height=760;const hx=hc.getContext('2d');hx.fillStyle='#262320';hx.fillRect(0,0,640,760);hx.globalCompositeOperation='destination-out';
+let rw=0;for(let y=8;y<760;y+=12,rw++){for(let x=8+(rw%2?6:0);x<640;x+=12){const nx=(x-320)/290,ny=(y-325)/290,d=Math.hypot(nx,ny),a=Math.atan2(ny,nx);let b;
+if(d<.42)b=1-d*.9;else if(d<.95)b=.12+.75*Math.max(0,Math.cos(a*9))*(1-(d-.42)/.53);else b=.08;hx.beginPath();hx.arc(x,y,.8+4.6*Math.max(0,Math.min(1,b)),0,7);hx.fill();}}
+const hTex=new THREE.CanvasTexture(hc);
+const front=new THREE.Mesh(new THREE.PlaneGeometry(FW,1),new THREE.MeshStandardMaterial({map:hTex,alphaTest:.5,side:THREE.DoubleSide,roughness:.9}));front.position.z=ZF+.002;scene.add(front);
+const p1=new THREE.PlaneGeometry(FW,1);const liM=new THREE.MeshBasicMaterial({color:0xF4EEDF,side:THREE.DoubleSide}),dkM=new THREE.MeshBasicMaterial({color:0x121110,side:THREE.DoubleSide});
+const dL=new THREE.Mesh(p1,liM),dD=new THREE.Mesh(p1,dkM);dL.position.z=dD.position.z=ZF-.001;scene.add(dL);scene.add(dD);
+const black=new THREE.Mesh(new THREE.PlaneGeometry(BW,1),M(0x1E1D1B,{side:THREE.DoubleSide}));black.position.z=ZB;scene.add(black);
+const barF=box(FW+.01,.022,.012,M(0xF1EFE8,{roughness:.4}),0,TOP,ZF),barB=box(BW,.022,.01,M(0x2C2C2A,{roughness:.4}),0,TOP,ZB);
+const profM=M(0xF4F2EC,{roughness:.35});const pG=[new THREE.Group(),new THREE.Group()];
+[-1,1].forEach((s,i)=>{const g=pG[i];scene.add(g);box(.04,TOP,.003,profM,s*.68,TOP/2,ZB-.009,g);box(.04,TOP,.003,profM,s*.68,TOP/2,ZB+.009,g);box(.003,TOP,.021,profM,s*.6985,TOP/2,ZB,g);
+box(.002,TOP,.012,new THREE.MeshBasicMaterial({color:0xD85A30}),s*.6995,TOP/2,ZB,g);});
+const magM1=new THREE.MeshBasicMaterial({color:0x888780}),magM2=new THREE.MeshBasicMaterial({color:0x888780});
+const magB=box(BW,.004,.012,magM1,0,.002,ZB),magF=box(FW,.004,.012,magM2,0,.002,ZF);
+const beamM=()=>new THREE.MeshBasicMaterial({color:0xFFC870,transparent:true,opacity:0,blending:THREE.AdditiveBlending,depthWrite:false});
+function beam(S,E,r,mat){const d=new THREE.Vector3().subVectors(E,S),L=d.length();const g=new THREE.CylinderGeometry(r,r,L,10,1,true);const m=new THREE.Mesh(g,mat);
+m.position.copy(S).addScaledVector(d,.5);m.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),d.normalize());scene.add(m);return m;}
+const leakM=beamM(),blockM=beamM(),spotM=beamM();
+[-1,1].forEach(s=>{[.35,.65,.95,1.25].forEach(y=>{beam(new THREE.Vector3(s*.69,y+.12,-.19),new THREE.Vector3(s*.6,y-.18,.75),.012,leakM);
+beam(new THREE.Vector3(s*.69,y+.12,-.19),new THREE.Vector3(s*.69,y+.1,-.086),.012,blockM);
+const sp=new THREE.Mesh(new THREE.SphereGeometry(.014,12,8),spotM);sp.position.set(s*.69,y+.1,-.086);scene.add(sp);});});
+const clipP=[new THREE.Plane(new THREE.Vector3(0,-1,0),.9)];const secM=new THREE.MeshBasicMaterial({color:0xFFA51F,transparent:true,opacity:0,depthWrite:false});[[.58,.688],[.63,.689],[.69,.69]].forEach(q=>{beam(new THREE.Vector3(q[0],.86,-.195),new THREE.Vector3(q[1],.86,-.088),.005,secM);const sp=new THREE.Mesh(new THREE.SphereGeometry(.007,10,8),secM);sp.position.set(q[1],.86,-.088);scene.add(sp);});
+[wallM,profM,frM].forEach(m=>{m.side=THREE.DoubleSide;});
+const fg=new THREE.Mesh(new THREE.PlaneGeometry(.12,.9),leakM);fg.rotation.x=-Math.PI/2;fg.position.set(.55,-.89,1.0);scene.add(fg);const fg2=fg.clone();fg2.position.x=-.55;scene.add(fg2);
+function cl(v){return Math.max(0,Math.min(1,v));}function ez(k){return k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;}
+const steps=[
+{t:'Wnęka okienna',x:'Punkt wyjścia: okno we wnęce, bez rolety. Pełne światło dnia.',d:4,c:[1.7,1.0,2.7],g:[0,.8,-.1],a:(s,p)=>{}},
+{t:'Montaż kasety',x:'Kaseta z dwoma cienkimi wałkami wpina się na 2 uchwyty pod sufitem wnęki albo na drążek rozporowy – bez wiercenia.',d:5,c:[.95,1.75,1.05],g:[.25,1.5,-.06],a:(s,p)=>{s.cas=p;}},
+{t:'Bez prowadnic: szczeliny po bokach',x:'Blackout wiszący luźno zostawia 1–2 cm przy ścianach. Słońce wpada bokiem i rysuje smugi w pokoju.',d:6,c:[.25,1.05,1.0],g:[.62,.75,-.05],a:(s,p)=>{s.b=cl(p/.55);s.leak=cl((p-.5)/.3);}},
+{t:'Opcja: wklejane prowadnice',x:'Lekkie profile w kształcie litery U przyklejasz taśmą VHB (czerwona) do ścian wnęki, równo w linii blackoutu.',d:6,c:[1.15,1.05,1.25],g:[.62,.85,-.07],a:(s,p)=>{s.b=1-cl(p/.3);s.leak=Math.max(0,1-p/.25);s.prof=cl((p-.35)/.5);}},
+{t:'Magnesy na parapecie',x:'Na parapecie przyklejasz dwa paski magnetyczne – po jednym dla każdej rolety.',d:4.5,c:[.75,.55,.75],g:[.35,.02,-.06],a:(s,p)=>{s.mag=cl(p/.7);}},
+{t:'Blackout zjeżdża w kieszenie',x:'Przekrój z góry: krawędź blackoutu wisi luźno w profilu i niczego nie dotyka. Promienie słońca zatrzymują się na ściance profilu i nie wpadają do pokoju.',d:7,c:[.6,1.25,.12],g:[.67,.86,-.11],a:(s,p)=>{s.b=cl(p/.5);s.clip=p>.25?1:0;s.block=cl((p-.45)/.25);}},
+{t:'Listwa klika na magnes',x:'Dociążona listwa dolna przyczepia się do magnesu – roleta jest napięta, równa i szczelna od dołu.',d:4.5,c:[.5,.25,.55],g:[.55,.03,-.07],a:(s,p)=>{s.block=1;s.snap=p;}},
+{t:'Obraz zjeżdża z przodu',x:'Roleta z obrazem wisi luźno przed profilami – jest odrobinę węższa, więc o nie nie ociera. Za nią pełne zaciemnienie.',d:6,c:[1.6,.95,2.6],g:[0,.8,-.08],a:(s,p)=>{s.block=1;s.f=cl(p/.8);}},
+{t:'LED – obraz świeci nocą',x:'Taśma LED w kasecie podświetla perforację od tyłu. Ciemny pokój, świecący obraz, bez smug światła po bokach.',d:6,c:[-1.1,.95,2.7],g:[0,.8,-.08],a:(s,p)=>{s.led=cl(p/.6);}}];
+const total=steps.reduce((a,s)=>a+s.d,0);const starts=[];{let a=0;steps.forEach(s=>{starts.push(a);a+=s.d;});}
+const dots=document.getElementById('iDots');steps.forEach((s,i)=>{const e=document.createElement('span');e.title=s.t;e.innerHTML='<i></i>';e.onclick=()=>{T=starts[i]+.01;};dots.appendChild(e);});
+let T=0,play=true,last=performance.now(),visible=true;
+const cD=new THREE.Color(0xF4EEDF),cK=new THREE.Color(0x121110),cL=new THREE.Color(0xFFC870),k1=new THREE.Color(0x2a2622),k2=new THREE.Color(0x0d0c0a),tmp=new THREE.Color();
+const v3=a=>new THREE.Vector3(a[0],a[1],a[2]);let curStep=-1;
+function frame(){let i=0;while(i<steps.length-1&&T>=starts[i+1])i++;const p=cl((T-starts[i])/steps[i].d);
+const s={cas:0,b:0,f:0,prof:0,mag:0,leak:0,block:0,led:0,snap:0,clip:0};for(let j=0;j<i;j++)steps[j].a(s,1);steps[i].a(s,p);
+if(i!==curStep){curStep=i;document.getElementById('iN').textContent='Krok '+(i+1)+' z '+steps.length;document.getElementById('iT').textContent=steps[i].t;document.getElementById('iX').textContent=steps[i].x;}
+[...dots.children].forEach((e,j)=>{e.firstChild.style.width=(j<i?100:j===i?p*100:0)+'%';});
+casG.position.set(0,1.57-(1-ez(s.cas))*.45,(1-ez(s.cas))*.5);
+const F=s.f*H,Bv=s.b*H,Bo=Math.min(Bv,F);
+front.scale.y=Math.max(F,.0005);front.position.y=TOP-F/2;hTex.repeat.set(1,Math.max(s.f,.0005));front.visible=F>.003;
+dD.scale.y=Math.max(Bo,.0005);dD.position.y=TOP-Bo/2;dD.visible=Bo>.003;dL.scale.y=Math.max(F-Bo,.0005);dL.position.y=TOP-Bo-(F-Bo)/2;dL.visible=F-Bo>.003;
+black.scale.y=Math.max(Bv,.0005);black.position.y=TOP-Bv/2;black.visible=Bv>.003;
+barF.position.y=TOP-F-.006;barF.visible=s.cas>.98;barB.position.y=TOP-Bv-.006;barB.visible=s.cas>.98;
+pG.forEach((g,k)=>{const e=ez(s.prof);g.position.z=(1-e)*.7;g.position.x=(k?1:-1)*(1-e)*.1;g.visible=s.prof>0;});
+magB.scale.x=magF.scale.x=Math.max(s.mag,.001);magB.visible=magF.visible=s.mag>0;
+const lock=s.b>.995&&s.mag>.5,pulse=.5+.5*Math.sin(T*8);magM1.color.set(lock?(s.snap>0&&s.snap<1&&pulse>.5?0xFAC775:0xEF9F27):0x888780);magM2.color.set(s.f>.995&&s.mag>.5?0xEF9F27:0x888780);
+leakM.opacity=.55*s.leak;blockM.opacity=.55*s.block*(1-s.led);spotM.opacity=.9*s.block*(1-s.led);secM.opacity=s.clip?.95*s.block:0;
+const L=Math.max(.07,1-.3*s.f*(1-s.b)-.93*s.b+.12*s.leak);const Lc=s.clip?Math.max(L,.8):L;amb.intensity=.55*Lc;hemi.intensity=.35*Lc;sun.intensity=.9*Lc;
+liM.color.copy(cD).lerp(cL,s.led);dkM.color.copy(cK).lerp(cL,s.led);ledM.color.set(s.led>.5?0xFFC870:0x777770);ledL.intensity=1.1*s.led;
+tmp.copy(k1).lerp(k2,s.b);R.setClearColor(tmp);R.clippingPlanes=s.clip?clipP:[];
+const pc=i>0?steps[i-1].c:steps[0].c,pg=i>0?steps[i-1].g:steps[0].g,k=ez(cl(p/.35)),dr=Math.sin(T*.35)*.04;
+const cp=v3(pc).lerp(v3(steps[i].c),k);cp.x+=dr;cam.position.copy(cp);cam.lookAt(v3(pg).lerp(v3(steps[i].g),k));
+R.render(scene,cam);}
+function loop(now){const dt=Math.min(.05,(now-last)/1000);last=now;if(play&&visible){T+=dt;if(T>=total)T=0;}if(visible)frame();requestAnimationFrame(loop);}
+try{new IntersectionObserver(e=>{visible=e[0].isIntersecting;},{threshold:.05}).observe(wrap);}catch(e){}
+const pb=document.getElementById('iPlay');pb.onclick=()=>{play=!play;pb.textContent=play?'Pauza':'Odtwórz';};
+function cur(){let i=0;while(i<steps.length-1&&T>=starts[i+1])i++;return i;}
+document.getElementById('iNext').onclick=()=>{const i=cur();T=i<steps.length-1?starts[i+1]+.01:0;frame();};
+document.getElementById('iPrev').onclick=()=>{const i=cur();T=(T-starts[i]>1.5||i===0)?starts[i]+.01:starts[i-1]+.01;frame();};
+new ResizeObserver(()=>{R.setSize(W(),Hh(),false);cam.aspect=W()/Hh();cam.updateProjectionMatrix();}).observe(wrap);
+frame();requestAnimationFrame(loop);
 })();
 </script>
 </body>
