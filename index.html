@@ -179,6 +179,16 @@ h3{font-family:var(--display);font-weight:700;font-size:clamp(18px,2.8vw,22px);m
   <div class="stage3d instStage" id="wInst"><div class="cap" id="iCap"><div class="n" id="iN"></div><div class="tt" id="iT"></div><div class="tx" id="iX"></div></div></div>
   <div class="ibar"><button class="b" id="iPrev" aria-label="Poprzedni krok">◀</button><button class="b" id="iPlay">Pauza</button><button class="b" id="iNext" aria-label="Następny krok">▶</button><div class="idots" id="iDots"></div></div>
   </section>
+  <section class="variant" id="plaskie">
+  <div class="vhead"><h2>Montaż przy płaskim oknie</h2><span class="tag">okno bez wnęki</span></div>
+  <p class="sub">Gdy okno jest w jednej płaszczyźnie ze ścianą, nie ma bocznych ścian ani parapetu. Są dwa sposoby: roleta na ścianie nad oknem, która zasłania całe okno, albo roleta bezpośrednio na skrzydle, która uchyla się razem z oknem.</p>
+  <div class="vhead inst"><h3>A – na ścianę nad oknem</h3><span class="tag">zasłania całe okno</span></div>
+  <div class="stage3d instStage" id="faW"><div class="cap"><div class="n" id="faN"></div><div class="tt" id="faT"></div><div class="tx" id="faX"></div></div></div>
+  <div class="ibar"><button class="b" id="faPrev" aria-label="Poprzedni krok">◀</button><button class="b" id="faPlay">Pauza</button><button class="b" id="faNext" aria-label="Następny krok">▶</button><div class="idots" id="faDots"></div></div>
+  <div class="vhead inst"><h3>B – na skrzydło okna</h3><span class="tag">bez wiercenia · uchyla się z oknem</span></div>
+  <div class="stage3d instStage" id="fbW"><div class="cap"><div class="n" id="fbN"></div><div class="tt" id="fbT"></div><div class="tx" id="fbX"></div></div></div>
+  <div class="ibar"><button class="b" id="fbPrev" aria-label="Poprzedni krok">◀</button><button class="b" id="fbPlay">Pauza</button><button class="b" id="fbNext" aria-label="Następny krok">▶</button><div class="idots" id="fbDots"></div></div>
+  </section>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
@@ -508,6 +518,113 @@ document.getElementById('iNext').onclick=()=>{const i=cur();T=i<steps.length-1?s
 document.getElementById('iPrev').onclick=()=>{const i=cur();T=(T-starts[i]>1.5||i===0)?starts[i]+.01:starts[i-1]+.01;frame();};
 new ResizeObserver(()=>{R.setSize(W(),Hh(),false);cam.aspect=W()/Hh();cam.updateProjectionMatrix();}).observe(wrap);
 frame();requestAnimationFrame(loop);
+})();
+</script>
+<script>
+(function(){
+function cl(v){return Math.max(0,Math.min(1,v));}function ez(k){return k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;}
+function makeHoles(){const hc=document.createElement('canvas');hc.width=640;hc.height=760;const hx=hc.getContext('2d');hx.fillStyle='#262320';hx.fillRect(0,0,640,760);hx.globalCompositeOperation='destination-out';
+let rw=0;for(let y=8;y<760;y+=12,rw++){for(let x=8+(rw%2?6:0);x<640;x+=12){const nx=(x-320)/290,ny=(y-325)/290,d=Math.hypot(nx,ny),a=Math.atan2(ny,nx);let b;
+if(d<.42)b=1-d*.9;else if(d<.95)b=.12+.75*Math.max(0,Math.cos(a*9))*(1-(d-.42)/.53);else b=.08;hx.beginPath();hx.arc(x,y,.8+4.6*Math.max(0,Math.min(1,b)),0,7);hx.fill();}}
+return new THREE.CanvasTexture(hc);}
+function skyTex(){const sc=document.createElement('canvas');sc.width=sc.height=512;const sx=sc.getContext('2d');
+sx.fillStyle='#9CCBEB';sx.fillRect(0,0,512,512);sx.fillStyle='#FAC775';sx.beginPath();sx.arc(380,120,46,0,7);sx.fill();
+sx.fillStyle='#B4B2A9';sx.fillRect(70,250,60,170);sx.fillStyle='#D3D1C7';sx.fillRect(300,290,46,130);sx.fillStyle='#639922';sx.fillRect(0,400,512,112);
+sx.fillStyle='#3B6D11';[[90,400,80],[260,410,95],[440,405,85]].forEach(a=>{sx.beginPath();sx.ellipse(a[0],a[1],a[2],48,0,0,7);sx.fill();});return new THREE.CanvasTexture(sc);}
+function demo(px,variant,steps){
+const wrap=document.getElementById(px+'W');const W=()=>wrap.clientWidth,Hh=()=>wrap.clientHeight;
+const R=new THREE.WebGLRenderer({antialias:true});R.setPixelRatio(Math.min(2,window.devicePixelRatio||1));R.setSize(W(),Hh(),false);wrap.prepend(R.domElement);
+const scene=new THREE.Scene();const cam=new THREE.PerspectiveCamera(40,W()/Hh(),.02,50);
+const amb=new THREE.AmbientLight(0xffffff,.55);scene.add(amb);const hemi=new THREE.HemisphereLight(0xdfeaff,0x6b5540,.35);scene.add(hemi);
+const sun=new THREE.DirectionalLight(0xfff1d6,.9);sun.position.set(1.5,3,3);scene.add(sun);
+const ledL=new THREE.PointLight(0xffb85c,0,4,2);ledL.position.set(0,.8,.6);scene.add(ledL);
+const M=(c,o={})=>new THREE.MeshStandardMaterial(Object.assign({color:c,roughness:.85},o));
+function box(w,h,d,m,x,y,z,par){const o=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),m);o.position.set(x,y,z);(par||scene).add(o);return o;}
+const wallM=M(0xE8E4DC),D=.25;
+box(1.6,3.4,D,wallM,-1.5,.8,-D/2);box(1.6,3.4,D,wallM,1.5,.8,-D/2);box(1.4,.9,D,wallM,0,2.05,-D/2);box(1.4,.9,D,wallM,0,-.45,-D/2);
+const fl=new THREE.Mesh(new THREE.PlaneGeometry(6,4),M(0x8B6B4A));fl.rotation.x=-Math.PI/2;fl.position.set(0,-.9,1.6);scene.add(fl);
+const sky=new THREE.Mesh(new THREE.PlaneGeometry(3.2,3.2),new THREE.MeshBasicMaterial({map:skyTex()}));sky.position.set(0,.8,-1.4);scene.add(sky);
+const frM=M(0xF1EFE8,{roughness:.5});
+box(1.4,.05,.07,frM,0,1.575,-.035);box(1.4,.05,.07,frM,0,.025,-.035);box(.05,1.6,.07,frM,-.675,.8,-.035);box(.05,1.6,.07,frM,.675,.8,-.035);
+const sash=new THREE.Group();sash.position.set(0,.05,-.03);scene.add(sash);
+const sM=M(0xF4F2EC,{roughness:.45});
+box(1.3,.06,.06,sM,0,1.47,0,sash);box(1.3,.06,.06,sM,0,.03,0,sash);box(.06,1.5,.06,sM,-.62,.75,0,sash);box(.06,1.5,.06,sM,.62,.75,0,sash);
+const gl=new THREE.Mesh(new THREE.PlaneGeometry(1.18,1.38),new THREE.MeshStandardMaterial({color:0xBFDDF2,transparent:true,opacity:.18,roughness:.1}));gl.position.set(0,.75,0);sash.add(gl);
+box(.025,.12,.03,M(0xD3D1C7,{metalness:.4,roughness:.3}),.62,.8,.045,sash);
+const P=variant==='A'?{TOP:1.66,H:1.76,BW:1.62,FW:1.58,ZB:.12,ZF:.145,par:scene,baseY:0}:{TOP:1.40,H:1.33,BW:1.16,FW:1.12,ZB:.05,ZF:.064,par:sash,baseY:0};
+const par=P.par;
+const casG=new THREE.Group();par.add(casG);
+let brs=[],hooks=[],botG=new THREE.Group();par.add(botG);
+if(variant==='A'){casG.position.set(0,1.7,.13);box(1.68,.08,.06,M(0xE8E6E0,{roughness:.5}),0,0,0,casG);
+[-.6,.6].forEach(x=>{const b=box(.04,.03,.11,M(0x888780,{metalness:.4,roughness:.4}),x,1.7,.055);brs.push(b);});
+box(.025,.012,.13,M(0x888780,{metalness:.4}),-.8,-.115,.065,botG);box(.025,.012,.13,M(0x888780,{metalness:.4}),.8,-.115,.065,botG);box(1.64,.012,.04,M(0xD3D1C7),0,-.115,.133,botG);}
+else{casG.position.set(0,1.425,.057);box(1.22,.05,.04,M(0xE8E6E0,{roughness:.5}),0,0,0,casG);
+[-.45,.45].forEach(x=>{const g=new THREE.Group();g.position.set(x,0,0);sash.add(g);box(.05,.008,.075,M(0x888780,{metalness:.4}),0,1.503,.012,g);box(.05,.05,.006,M(0x888780,{metalness:.4}),0,1.48,-.024,g);box(.05,.035,.006,M(0x888780,{metalness:.4}),0,1.49,.048,g);hooks.push(g);});
+box(1.16,.01,.02,M(0xD3D1C7),0,.065,.058,botG);box(.012,1.32,.01,M(0xF4F2EC),-.585,.73,.05,botG);box(.012,1.32,.01,M(0xF4F2EC),.585,.73,.05,botG);}
+const ledM=new THREE.MeshBasicMaterial({color:0x777770});box(P.FW-.05,.005,.008,ledM,0,variant==='A'?-.041:-.026,variant==='A'?.0:.0,casG);
+const hTex=makeHoles();
+const front=new THREE.Mesh(new THREE.PlaneGeometry(P.FW,1),new THREE.MeshStandardMaterial({map:hTex,alphaTest:.5,side:THREE.DoubleSide,roughness:.9}));front.position.z=P.ZF+.002;par.add(front);
+const p1=new THREE.PlaneGeometry(P.FW,1);const liM=new THREE.MeshBasicMaterial({color:0xF4EEDF,side:THREE.DoubleSide}),dkM=new THREE.MeshBasicMaterial({color:0x121110,side:THREE.DoubleSide});
+const dL=new THREE.Mesh(p1,liM),dD=new THREE.Mesh(p1,dkM);dL.position.z=dD.position.z=P.ZF-.001;par.add(dL);par.add(dD);
+const black=new THREE.Mesh(new THREE.PlaneGeometry(P.BW,1),M(0x1E1D1B,{side:THREE.DoubleSide}));black.position.z=P.ZB;par.add(black);
+const barF=box(P.FW+.01,.02,.012,M(0xF1EFE8,{roughness:.4}),0,P.TOP,P.ZF,par),barB=box(P.BW,.02,.01,M(0x2C2C2A,{roughness:.4}),0,P.TOP,P.ZB,par);
+const mgB=new THREE.MeshBasicMaterial({color:0x888780}),mgF=new THREE.MeshBasicMaterial({color:0x888780});
+const yb=P.TOP-P.H-.012;box(P.BW,.004,.012,mgB,0,yb,P.ZB,botG);box(P.FW,.004,.012,mgF,0,yb,P.ZF,botG);
+const beamM=new THREE.MeshBasicMaterial({color:0xFFA51F,transparent:true,opacity:0,depthWrite:false});
+function beam(S,E,r){const d=new THREE.Vector3().subVectors(E,S),L=d.length();const m=new THREE.Mesh(new THREE.CylinderGeometry(r,r,L,10,1,true),beamM);m.position.copy(S).addScaledVector(d,.5);m.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),d.normalize());scene.add(m);const sp=new THREE.Mesh(new THREE.SphereGeometry(r*2.2,10,8),beamM);sp.position.copy(E);scene.add(sp);}
+if(variant==='A'){[.3,.6,.9,1.2].forEach(y=>{beam(new THREE.Vector3(.62,y+.1,-.3),new THREE.Vector3(.76,y-.02,P.ZB-.004),.008);beam(new THREE.Vector3(-.62,y+.1,-.3),new THREE.Vector3(-.76,y-.02,P.ZB-.004),.008);});}
+const total=steps.reduce((a,s)=>a+s.d,0);const starts=[];{let a=0;steps.forEach(s=>{starts.push(a);a+=s.d;});}
+const dots=document.getElementById(px+'Dots');steps.forEach((s,i)=>{const e=document.createElement('span');e.title=s.t;e.innerHTML='<i></i>';e.onclick=()=>{T=starts[i]+.01;};dots.appendChild(e);});
+let T=0,play=true,last=performance.now(),visible=true,curStep=-1;
+const cD=new THREE.Color(0xF4EEDF),cK=new THREE.Color(0x121110),cL=new THREE.Color(0xFFC870),k1=new THREE.Color(0x2a2622),k2=new THREE.Color(0x0d0c0a),tmp=new THREE.Color();
+const v3=a=>new THREE.Vector3(a[0],a[1],a[2]);
+function frame(){let i=0;while(i<steps.length-1&&T>=starts[i+1])i++;const p=cl((T-starts[i])/steps[i].d);
+const s={br:0,cas:0,bot:0,b:0,f:0,tilt:0,led:0,beams:0};for(let j=0;j<i;j++)steps[j].a(s,1);steps[i].a(s,p);
+if(i!==curStep){curStep=i;document.getElementById(px+'N').textContent='Krok '+(i+1)+' z '+steps.length;document.getElementById(px+'T').textContent=steps[i].t;document.getElementById(px+'X').textContent=steps[i].x;}
+[...dots.children].forEach((e,j)=>{e.firstChild.style.width=(j<i?100:j===i?p*100:0)+'%';});
+sash.rotation.x=.075*ez(s.tilt);
+if(variant==='A'){brs.forEach(b=>{b.visible=s.br>0;b.position.z=.055+(1-ez(s.br))*.5;});casG.position.set(0,1.7+(1-ez(s.cas))*.0,.13+(1-ez(s.cas))*.5);casG.visible=s.cas>0;}
+else{hooks.forEach(h=>{h.visible=s.br>0;h.position.y=(1-ez(s.br))*.3;});casG.position.set(0,1.425,.057+(1-ez(s.cas))*.5);casG.visible=s.cas>0;}
+botG.visible=s.bot>0;botG.position.z=(1-ez(s.bot))*.5;
+const F=s.f*P.H,Bv=s.b*P.H,Bo=Math.min(Bv,F);
+front.scale.y=Math.max(F,.0005);front.position.y=P.TOP-F/2;hTex.repeat.set(1,Math.max(s.f,.0005));front.visible=F>.003;
+dD.scale.y=Math.max(Bo,.0005);dD.position.y=P.TOP-Bo/2;dD.visible=Bo>.003;dL.scale.y=Math.max(F-Bo,.0005);dL.position.y=P.TOP-Bo-(F-Bo)/2;dL.visible=F-Bo>.003;
+black.scale.y=Math.max(Bv,.0005);black.position.y=P.TOP-Bv/2;black.visible=Bv>.003;
+barF.position.y=P.TOP-F-.006;barF.visible=s.cas>.98;barB.position.y=P.TOP-Bv-.006;barB.visible=s.cas>.98;
+mgB.color.set(s.b>.995&&s.bot>.9?0xEF9F27:0x888780);mgF.color.set(s.f>.995&&s.bot>.9?0xEF9F27:0x888780);
+beamM.opacity=.95*s.beams;
+const L=Math.max(steps[i].lit?.75:.07,1-.3*s.f*(1-s.b)-.93*s.b);amb.intensity=.55*L;hemi.intensity=.35*L;sun.intensity=.9*L;
+liM.color.copy(cD).lerp(cL,s.led);dkM.color.copy(cK).lerp(cL,s.led);ledM.color.set(s.led>.5?0xFFC870:0x777770);ledL.intensity=1.1*s.led;
+tmp.copy(k1).lerp(k2,steps[i].lit?0:s.b);R.setClearColor(tmp);
+const pc=i>0?steps[i-1].c:steps[0].c,pg=i>0?steps[i-1].g:steps[0].g,k=ez(cl(p/.35)),dr=Math.sin(T*.35)*.04;
+const cp=v3(pc).lerp(v3(steps[i].c),k);cp.x+=dr;cam.position.copy(cp);cam.lookAt(v3(pg).lerp(v3(steps[i].g),k));R.render(scene,cam);}
+function loop(now){const dt=Math.min(.05,(now-last)/1000);last=now;if(play&&visible){T+=dt;if(T>=total)T=0;}if(visible)frame();requestAnimationFrame(loop);}
+try{new IntersectionObserver(e=>{visible=e[0].isIntersecting;},{threshold:.05}).observe(wrap);}catch(e){}
+const pb=document.getElementById(px+'Play');pb.onclick=()=>{play=!play;pb.textContent=play?'Pauza':'Odtwórz';};
+function cur(){let i=0;while(i<steps.length-1&&T>=starts[i+1])i++;return i;}
+document.getElementById(px+'Next').onclick=()=>{const i=cur();T=i<steps.length-1?starts[i+1]+.01:0;frame();};
+document.getElementById(px+'Prev').onclick=()=>{const i=cur();T=(T-starts[i]>1.5||i===0)?starts[i]+.01:starts[i-1]+.01;frame();};
+new ResizeObserver(()=>{R.setSize(W(),Hh(),false);cam.aspect=W()/Hh();cam.updateProjectionMatrix();}).observe(wrap);
+frame();requestAnimationFrame(loop);}
+const tiltBack=p=>p<.65?cl(p/.35):1-cl((p-.65)/.3);
+demo('fa','A',[
+{t:'Płaskie okno – bez wnęki',x:'Okno w jednej płaszczyźnie ze ścianą. Nie ma bocznych ścian ani parapetu, na których można by oprzeć roletę.',d:4,c:[1.9,1.0,3.0],g:[0,.8,0],a:(s,p)=>{}},
+{t:'Wsporniki nad oknem',x:'Dwa wsporniki przykręcasz do ściany nad oknem (lub do sufitu). Odsuwają kasetę o 10–12 cm od ściany.',d:5,c:[1.0,1.95,1.2],g:[.3,1.7,.06],a:(s,p)=>{s.br=p;}},
+{t:'Kaseta na klik',x:'Kaseta wpina się we wsporniki. Zdejmujesz ją bez narzędzi, np. do prania lub wymiany obrazu.',d:4.5,c:[1.0,1.95,1.25],g:[.3,1.7,.1],a:(s,p)=>{s.cas=p;}},
+{t:'Dolna listwa z magnesami',x:'Pod oknem montujesz wąską listwę na dwóch ramionach, w tej samej odległości od ściany co rolety.',d:5,c:[1.0,.15,1.1],g:[.4,-.1,.08],a:(s,p)=>{s.bot=p;}},
+{t:'Blackout zasłania całe okno',x:'Blackout jest szerszy od okna o ok. 10 cm z każdej strony i sięga poniżej. Zakładka zatrzymuje słońce – bez prowadnic.',d:7,lit:1,c:[2.3,1.15,1.7],g:[.55,.8,.05],a:(s,p)=>{s.b=cl(p/.55);s.beams=cl((p-.55)/.25);}},
+{t:'Uchył przy opuszczonej rolecie',x:'Dzięki odstępowi 10–12 cm uchylone skrzydło mieści się za roletą – można wietrzyć przy zaciemnieniu.',d:6,lit:1,c:[2.4,1.1,.7],g:[0,.85,.08],a:(s,p)=>{s.beams=0;s.tilt=tiltBack(p);}},
+{t:'Obraz na całe okno',x:'Roleta z obrazem zjeżdża przed blackoutem. Obraz zasłania całe okno razem z ramą.',d:6,c:[1.7,1.0,3.0],g:[0,.8,.1],a:(s,p)=>{s.f=cl(p/.75);}},
+{t:'LED – duży obraz nocą',x:'Taśma LED w kasecie podświetla perforację. Świecący obraz wielkości całego okna.',d:6,c:[-1.3,1.0,2.9],g:[0,.8,.1],a:(s,p)=>{s.led=cl(p/.6);}}]);
+demo('fb','B',[
+{t:'Płaskie okno – bez wnęki',x:'To samo płaskie okno. Tym razem roleta zamocowana bezpośrednio na skrzydle.',d:4,c:[1.9,1.0,3.0],g:[0,.8,0],a:(s,p)=>{}},
+{t:'Zaczepy na skrzydło',x:'Dwa zaczepy zahaczasz o górną krawędź skrzydła – bez wiercenia i bez kleju.',d:5,c:[.85,1.8,.95],g:[.3,1.5,0],a:(s,p)=>{s.br=p;}},
+{t:'Cienka kaseta',x:'Cienka kaseta (~4 cm) wpina się w zaczepy. Wałki są cieńsze, ok. 15–17 mm.',d:4.5,c:[.85,1.75,1.0],g:[.3,1.45,.03],a:(s,p)=>{s.cas=p;}},
+{t:'Magnes i cienkie profile',x:'Na dole skrzydła przyklejasz pasek magnetyczny, a po bokach opcjonalnie cienkie profile – też tylko na skrzydle.',d:5,c:[.9,.35,1.0],g:[.35,.1,.02],a:(s,p)=>{s.bot=p;}},
+{t:'Blackout zjeżdża po szybie',x:'Blackout zasłania szybę skrzydła i przyczepia się do magnesu na dole.',d:6,c:[1.5,1.0,2.2],g:[0,.75,0],a:(s,p)=>{s.b=cl(p/.7);}},
+{t:'Obraz zjeżdża z przodu',x:'Roleta z obrazem zjeżdża przed blackoutem – obraz ma wielkość szyby.',d:5.5,c:[1.5,1.0,2.4],g:[0,.75,0],a:(s,p)=>{s.f=cl(p/.75);}},
+{t:'Uchył razem z roletą',x:'Roleta jest częścią skrzydła, więc uchyla się i otwiera razem z oknem. Nic nie koliduje.',d:6.5,lit:1,c:[2.4,1.1,1.0],g:[0,.8,.05],a:(s,p)=>{s.tilt=tiltBack(p);}},
+{t:'LED – obraz na szybie',x:'Nocą LED w kasecie podświetla obraz. Przy oknie dwuskrzydłowym każde skrzydło ma swoją roletę.',d:6,c:[-1.2,1.0,2.6],g:[0,.75,0],a:(s,p)=>{s.led=cl(p/.6);}}]);
 })();
 </script>
 </body>
