@@ -18,6 +18,9 @@ body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-
 .wrap{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
 h1{font-family:var(--display);font-weight:700;font-size:clamp(28px,5vw,42px);line-height:1.1;margin:0;text-wrap:balance}
 .lead{color:var(--muted);margin:0;max-width:62ch}
+.stage3d{position:relative;width:100%;height:min(460px,70vw);min-height:300px;border-radius:14px;overflow:hidden;background:#2a2622;border:1px solid var(--line)}
+.stage3d canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
+.hint3d{position:absolute;left:12px;bottom:10px;font-size:12px;color:#F1EFE8;opacity:.8;pointer-events:none}
 .stage{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;overflow-x:auto}
 .stage svg{display:block;width:100%;min-width:520px;height:auto}
 .ts{font-family:var(--body);font-size:12px;fill:var(--muted)}
@@ -41,54 +44,9 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(28px,5vw,42px);lin
   <h1>Perforowana roleta z obrazem</h1>
   <p class="lead">Dwa wałki w jednej kasecie: od pokoju perforacja z mlecznym podkładem, od szyby blackout. Montaż we wnęce okiennej, boczne szyny, magnesy w parapecie.</p>
   <figure class="film"><video id="film" src="roleta22.mp4" autoplay muted loop playsinline controls preload="auto"></video></figure>
-  <div class="stage">
-<svg viewBox="0 0 680 505" role="img"><title>Roleta z dwoma wałkami</title><desc>Po lewej widok z pokoju, po prawej przekrój montażu we wnęce z wymiarami.</desc>
-<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker>
-<clipPath id="cF"><rect id="cFr" x="40" y="56" width="240" height="0"/></clipPath></defs>
-<rect x="34" y="44" width="252" height="332" rx="3" fill="#5F5E5A"/>
-<rect id="sky" x="40" y="56" width="240" height="314" fill="#9CCBEB"/>
-<circle id="sun" cx="230" cy="100" r="22" fill="#FAC775"/>
-<rect x="70" y="250" width="34" height="70" fill="#B4B2A9"/>
-<rect x="40" y="315" width="240" height="55" fill="#639922"/>
-<ellipse cx="150" cy="318" rx="50" ry="22" fill="#3B6D11"/>
-<rect id="fB" x="40" y="56" width="240" height="0" fill="#1E1D1B"/>
-<rect id="fF" x="40" y="56" width="240" height="0" fill="#252320"/>
-<g id="dots" clip-path="url(#cF)" fill="#F4F1EA"></g>
-<rect id="barB" x="40" y="50" width="240" height="6" fill="#444441"/>
-<rect id="barF" x="40" y="50" width="240" height="6" fill="#5F5E5A"/>
-<rect x="34" y="40" width="252" height="16" rx="3" fill="#444441"/>
-<text class="ts" x="160" y="396" text-anchor="middle">Widok z pokoju</text>
-<text class="ts" x="445" y="28" text-anchor="middle">Przekrój – montaż we wnęce</text>
-<rect x="360" y="40" width="170" height="50" fill="#B4B2A9"/>
-<rect x="360" y="380" width="170" height="40" fill="#B4B2A9"/>
-<rect x="380" y="90" width="12" height="290" fill="#D3D1C7" stroke="#888780" stroke-width="0.5"/>
-<g id="sash"><rect x="392" y="92" width="10" height="280" fill="#D3D1C7" stroke="#888780" stroke-width="0.5"/><rect x="395" y="100" width="4" height="264" fill="#85B7EB"/></g>
-<rect x="392" y="372" width="153" height="8" fill="#F1EFE8" stroke="#888780" stroke-width="0.5"/>
-<rect x="486" y="126" width="24" height="246" fill="none" stroke="var(--line)" stroke-width="0.8" stroke-dasharray="3 3"/>
-<rect id="led" x="496" y="122" width="6" height="4" fill="#888780"/>
-<rect x="470" y="90" width="54" height="32" rx="3" fill="#444441"/>
-<circle cx="482" cy="106" r="10" fill="#888780"/>
-<circle cx="510" cy="106" r="10" fill="#BA7517"/>
-<line id="sB" x1="490" y1="126" x2="490" y2="126" stroke="#1E1D1B" stroke-width="3"/>
-<line id="sD" x1="503" y1="126" x2="503" y2="126" stroke="#E9E5DC" stroke-width="3"/>
-<line id="sP" x1="506" y1="126" x2="506" y2="126" stroke="#BA7517" stroke-width="3" stroke-dasharray="5 3"/>
-<rect id="bB" x="485" y="124" width="10" height="4" fill="#5F5E5A"/>
-<rect id="bF" x="500" y="124" width="10" height="4" fill="#5F5E5A"/>
-<rect id="mB" x="486" y="369" width="8" height="3" fill="#888780"/>
-<rect id="mF" x="501" y="369" width="8" height="3" fill="#888780"/>
-<text class="ts" x="372" y="234" text-anchor="end">Okno</text>
-<line class="leader" x1="524" y1="104" x2="540" y2="104"/><text class="ts" x="546" y="100">Kaseta 9 × 6 cm<tspan x="546" dy="16">2 wałki, 2 silniki</tspan></text>
-<line class="leader" x1="490" y1="180" x2="540" y2="180"/><text class="ts" x="546" y="176">Blackout<tspan x="546" dy="16">(od szyby)</tspan></text>
-<line class="leader" x1="507" y1="260" x2="540" y2="260"/><text class="ts" x="546" y="256">Obraz z mlecznym<tspan x="546" dy="16">podkładem (od pokoju)</tspan></text>
-<line class="leader" x1="510" y1="370" x2="540" y2="354"/><text class="ts" x="546" y="358">Magnesy w parapecie</text>
-<line x1="404" y1="446" x2="468" y2="446" stroke="var(--muted)" stroke-width="1" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
-<text class="ts" x="436" y="464" text-anchor="middle">~11 cm na uchył okna</text>
-<line x1="394" y1="478" x2="528" y2="478" stroke="var(--muted)" stroke-width="1" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
-<text class="ts" x="461" y="497" text-anchor="middle">wnęka ~23 cm</text>
-</svg>
-  </div>
-  <div class="btns" id="btns">
-    <button id="m-widok" data-m="widok">Widok</button><button id="m-obraz" data-m="obraz">Obraz</button><button id="m-noc" data-m="noc">Noc</button><button id="ledb">LED</button><button id="tilt">Uchyl okno</button>
+  <div class="stage3d" id="wrap3d"><div class="hint3d">Przeciągnij, żeby obrócić · kółko myszy lub dwa palce, żeby przybliżyć</div></div>
+  <div class="btns" id="b3">
+    <button id="m-dzien" data-m="dzien">Dzień (bez rolety)</button><button id="m-obraz" data-m="obraz">Obraz</button><button id="m-ciemno" data-m="ciemno">Pełne zaciemnienie</button><button id="led3">LED</button><button id="cut3">Pokaż wnętrze kasety</button>
   </div>
   <p id="desc"></p>
   <ul class="specs">
@@ -98,43 +56,112 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(28px,5vw,42px);lin
     <li><b>3,5–4,5 kg</b><span>waga całości dla okna 1,4 × 1,6 m</span></li>
   </ul>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
-const NS='http://www.w3.org/2000/svg',g=document.getElementById('dots');let row=0;
-for(let y=62;y<368;y+=10,row++){for(let x=46+(row%2?5:0);x<278;x+=10){const nx=(x-160)/120,ny=(y-205)/120,d=Math.hypot(nx,ny),a=Math.atan2(ny,nx);let b;
+const wrap=document.getElementById('wrap3d');
+const W=()=>wrap.clientWidth,Hh=()=>wrap.clientHeight;
+const renderer=new THREE.WebGLRenderer({antialias:true});
+renderer.setPixelRatio(Math.min(2,window.devicePixelRatio||1));renderer.setSize(W(),Hh());
+wrap.prepend(renderer.domElement);
+const scene=new THREE.Scene();
+const cam=new THREE.PerspectiveCamera(40,W()/Hh(),0.05,50);
+const amb=new THREE.AmbientLight(0xffffff,0.55);scene.add(amb);
+const hemi=new THREE.HemisphereLight(0xdfeaff,0x6b5540,0.35);scene.add(hemi);
+const sun=new THREE.DirectionalLight(0xfff1d6,0.9);sun.position.set(1.5,3,3);scene.add(sun);
+const ledLight=new THREE.PointLight(0xffb85c,0,4,2);ledLight.position.set(0,0.8,0.45);scene.add(ledLight);
+const M=(c,o={})=>new THREE.MeshStandardMaterial(Object.assign({color:c,roughness:.85,metalness:0},o));
+function box(w,h,d,mat,x,y,z){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);m.position.set(x,y,z);scene.add(m);return m;}
+const wallM=M(0xE8E4DC);const D=0.25;
+box(1.6,3.4,D,wallM,-1.5,0.8,-D/2);box(1.6,3.4,D,wallM,1.5,0.8,-D/2);
+box(1.4,0.9,D,wallM,0,2.05,-D/2);box(1.4,0.9,D,wallM,0,-0.45,-D/2);
+const floor=new THREE.Mesh(new THREE.PlaneGeometry(6,4),M(0x8B6B4A));floor.rotation.x=-Math.PI/2;floor.position.set(0,-0.9,1.6);scene.add(floor);
+const frameM=M(0xD3D1C7,{roughness:.5});
+box(1.4,0.05,0.07,frameM,0,1.575,-0.2);box(1.4,0.05,0.07,frameM,0,0.025,-0.2);box(0.05,1.6,0.07,frameM,-0.675,0.8,-0.2);box(0.05,1.6,0.07,frameM,0.675,0.8,-0.2);
+const sc=document.createElement('canvas');sc.width=512;sc.height=512;const sx=sc.getContext('2d');
+sx.fillStyle='#9CCBEB';sx.fillRect(0,0,512,512);sx.fillStyle='#FAC775';sx.beginPath();sx.arc(380,120,46,0,7);sx.fill();
+sx.fillStyle='#B4B2A9';sx.fillRect(70,250,60,170);sx.fillStyle='#D3D1C7';sx.fillRect(300,290,46,130);
+sx.fillStyle='#639922';sx.fillRect(0,400,512,112);sx.fillStyle='#3B6D11';[[90,400,80],[260,410,95],[440,405,85]].forEach(a=>{sx.beginPath();sx.ellipse(a[0],a[1],a[2],48,0,0,7);sx.fill();});
+const sky=new THREE.Mesh(new THREE.PlaneGeometry(3.2,3.2),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(sc)}));sky.position.set(0,0.8,-1.4);scene.add(sky);
+const glass=new THREE.Mesh(new THREE.PlaneGeometry(1.3,1.5),new THREE.MeshStandardMaterial({color:0xBFDDF2,transparent:true,opacity:.18,roughness:.1}));glass.position.set(0,0.8,-0.2);scene.add(glass);
+box(1.5,0.025,0.27,M(0xF1EFE8,{roughness:.4}),0,-0.0125,-0.085);
+const TOP=1.54,H=1.54,FW=1.32;
+const cas=box(1.4,0.06,0.095,new THREE.MeshStandardMaterial({color:0x444441,roughness:.6,transparent:true,opacity:1}),0,1.57,-0.065);
+const tubeG=new THREE.CylinderGeometry(0.018,0.018,1.34,24);tubeG.rotateZ(Math.PI/2);
+const tubeB=new THREE.Mesh(tubeG,M(0x888780,{roughness:.4,metalness:.3}));tubeB.position.set(0,1.57,-0.092);scene.add(tubeB);
+const tubeF=new THREE.Mesh(tubeG,M(0xBA7517,{roughness:.5}));tubeF.position.set(0,1.57,-0.04);scene.add(tubeF);
+const motG=new THREE.CylinderGeometry(0.019,0.019,0.22,20);motG.rotateZ(Math.PI/2);
+[-0.092,-0.04].forEach(z=>{const m=new THREE.Mesh(motG,M(0x2C2C2A,{metalness:.4,roughness:.4}));m.position.set(0.55,1.57,z);scene.add(m);});
+const ledM=new THREE.MeshBasicMaterial({color:0x666660});box(1.3,0.006,0.012,ledM,0,1.537,-0.066);
+const railM=M(0xB4B2A9,{roughness:.4,metalness:.4});
+box(0.04,TOP,0.1,railM,-0.68,TOP/2,-0.066);box(0.04,TOP,0.1,railM,0.68,TOP/2,-0.066);
+const hc=document.createElement('canvas');hc.width=660;hc.height=770;const hx=hc.getContext('2d');
+hx.fillStyle='#262320';hx.fillRect(0,0,660,770);hx.globalCompositeOperation='destination-out';
+let row=0;for(let y=8;y<770;y+=12,row++){for(let x=8+(row%2?6:0);x<660;x+=12){const nx=(x-330)/300,ny=(y-330)/300,d=Math.hypot(nx,ny),a=Math.atan2(ny,nx);let b;
 if(d<0.42)b=1-d*0.9;else if(d<0.95)b=0.12+0.75*Math.max(0,Math.cos(a*9))*(1-(d-0.42)/0.53);else b=0.08;
-const c=document.createElementNS(NS,'circle');c.setAttribute('cx',x);c.setAttribute('cy',y);c.setAttribute('r',(0.6+3.2*Math.max(0,Math.min(1,b))).toFixed(2));g.appendChild(c);}}
-const $=i=>document.getElementById(i);
-const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const M={widok:{f:0,b:0,t:'Obie rolety zwinięte w kasecie – pełny widok za okno.'},
-obraz:{f:1,b:0,t:'Perforacja z mlecznym podkładem opuszczona. Dziurki świecą równo światłem dnia.'},
-noc:{f:1,b:1,t:'Obraz zostaje na miejscu, a blackout zjeżdża za nim od strony szyby. W pokoju robi się ciemno, obraz zostaje jako dekoracja.'}};
-let cur={f:0,b:0,tl:0},tgt={f:0,b:0,tl:0},raf,mode='widok',led=0,seq;
-function draw(s){const H=314,hf=s.f*H,hb=s.b*H;
-$('fB').setAttribute('height',hb);$('fF').setAttribute('height',hf);$('cFr').setAttribute('height',hf);
-$('barB').setAttribute('y',50+hb);$('barF').setAttribute('y',50+hf);
-const L=246,yb=126+s.b*L,yf=126+s.f*L;
-$('sB').setAttribute('y2',yb);$('sD').setAttribute('y2',yf);$('sP').setAttribute('y2',yf);
-$('bB').setAttribute('y',Math.min(yb,368)-2);$('bF').setAttribute('y',Math.min(yf,368)-2);
-$('sash').setAttribute('transform','rotate('+(s.tl*11)+' 392 372)');}
-function color(){const night=tgt.b>0;
-g.setAttribute('fill',led&&tgt.f?'#FAC775':(night?'#3A3733':'#F4F1EA'));
-$('led').setAttribute('fill',led&&tgt.f?'#EF9F27':'#888780');
-$('sky').setAttribute('fill',mode==='noc'?'#2C2C2A':'#9CCBEB');$('sun').setAttribute('fill',mode==='noc'?'#D3D1C7':'#FAC775');}
-function go(){cancelAnimationFrame(raf);const from={...cur},t0=performance.now(),D=reduce?1:1400;
-if(!tgt.b)$('mB').setAttribute('fill','#888780');if(!tgt.f)$('mF').setAttribute('fill','#888780');
-(function step(now){let k=Math.min(1,(now-t0)/D);k=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;
-for(const p in cur)cur[p]=from[p]+(tgt[p]-from[p])*k;draw(cur);
-if(k<1)raf=requestAnimationFrame(step);else{if(tgt.b)$('mB').setAttribute('fill','#EF9F27');if(tgt.f)$('mF').setAttribute('fill','#EF9F27');}})(t0);}
-function text(){let t=M[mode].t;if(led&&tgt.f)t+=' LED w kasecie świeci w szczelinę – obraz świeci nocą.';if(tgt.tl)t+=' Okno uchylone – mieści się przed roletami.';$('desc').textContent=t;}
-function setMode(m){mode=m;clearTimeout(seq);const s=M[m];
-document.querySelectorAll('#btns button[data-m]').forEach(x=>x.classList.toggle('act',x.dataset.m===m));
-if(m==='noc'&&cur.f<0.99){tgt.f=1;tgt.b=0;go();seq=setTimeout(()=>{tgt.b=1;color();go();text();},reduce?10:1500);}
-else{tgt.f=s.f;tgt.b=s.b;go();}
-if(!s.f)led=0;$('ledb').classList.toggle('act',!!led);$('ledb').disabled=!s.f;color();text();}
-document.querySelectorAll('#btns button[data-m]').forEach(x=>x.onclick=()=>setMode(x.dataset.m));
-$('ledb').onclick=()=>{led=led?0:1;$('ledb').classList.toggle('act',!!led);color();text();};
-$('tilt').onclick=()=>{tgt.tl=tgt.tl?0:1;$('tilt').textContent=tgt.tl?'Zamknij okno':'Uchyl okno';$('tilt').classList.toggle('act',!!tgt.tl);go();text();};
-setMode('widok');setTimeout(()=>setMode('obraz'),700);setTimeout(()=>setMode('noc'),3000);
+hx.beginPath();hx.arc(x,y,0.8+4.6*Math.max(0,Math.min(1,b)),0,7);hx.fill();}}
+const holeTex=new THREE.CanvasTexture(hc);
+const front=new THREE.Mesh(new THREE.PlaneGeometry(FW,H),new THREE.MeshStandardMaterial({map:holeTex,alphaTest:.5,side:THREE.DoubleSide,roughness:.9}));front.position.z=-0.028;scene.add(front);
+const plane1=new THREE.PlaneGeometry(FW,1);
+const lightM=new THREE.MeshBasicMaterial({color:0xF4EEDF,side:THREE.DoubleSide});
+const darkM=new THREE.MeshBasicMaterial({color:0x121110,side:THREE.DoubleSide});
+const diffLight=new THREE.Mesh(plane1,lightM);diffLight.position.z=-0.031;scene.add(diffLight);
+const diffDark=new THREE.Mesh(plane1,darkM);diffDark.position.z=-0.031;scene.add(diffDark);
+const gc=document.createElement('canvas');gc.width=4;gc.height=64;const gx=gc.getContext('2d');const gr=gx.createLinearGradient(0,0,0,64);gr.addColorStop(0,'rgba(18,17,16,1)');gr.addColorStop(1,'rgba(18,17,16,0)');gx.fillStyle=gr;gx.fillRect(0,0,4,64);
+const edgeM=new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(gc),transparent:true,depthWrite:false,side:THREE.DoubleSide});
+const edge=new THREE.Mesh(plane1,edgeM);edge.position.z=-0.0302;edge.scale.y=0.09;scene.add(edge);
+const black=new THREE.Mesh(new THREE.PlaneGeometry(FW,H),M(0x1E1D1B,{side:THREE.DoubleSide}));black.position.z=-0.1;scene.add(black);
+const barM=M(0x5F5E5A,{metalness:.4,roughness:.4});
+const barF=box(FW,0.02,0.014,barM,0,TOP,-0.029);const barB=box(FW,0.02,0.012,barM,0,TOP,-0.1);
+const magF=box(FW,0.004,0.012,new THREE.MeshBasicMaterial({color:0x888780}),0,0.002,-0.029);
+const magB=box(FW,0.004,0.012,new THREE.MeshBasicMaterial({color:0x888780}),0,0.002,-0.1);
+const Mo={dzien:{f:0,b:0,t:'Dzień bez rolety – obie warstwy zwinięte w kasecie, pełne światło i widok za okno.'},
+obraz:{f:1,b:0,t:'Zjeżdża obraz. Światło przechodzi tylko przez dziurki z mlecznym podkładem, więc w pokoju robi się delikatnie ciemniej.'},
+ciemno:{f:1,b:1,t:'Za perforacją zjeżdża ciemna roleta – przez dziurki widać, jak cień przesuwa się w dół i obraz gaśnie. Teraz możesz włączyć LED.'}};
+let mode='dzien',led=0,cut=0;const cur={f:0,b:0,l:0},tgt={f:0,b:0,l:0};
+const cDay=new THREE.Color(0xF4EEDF),cDark=new THREE.Color(0x121110),cLed=new THREE.Color(0xFFC870),cClrDay=new THREE.Color(0x2a2622),cClrDark=new THREE.Color(0x0d0c0a),tmp=new THREE.Color();
+function setFab(mesh,frac,tex){const k=Math.max(frac,0.0005);mesh.scale.y=k;mesh.position.y=TOP-H*k/2;if(tex)tex.repeat.set(1,k);}
+function apply(){setFab(front,cur.f,holeTex);setFab(black,cur.b);
+const F=cur.f*H,B=Math.min(cur.b*H,F);
+diffDark.scale.y=Math.max(B,0.0005);diffDark.position.y=TOP-B/2;diffDark.visible=B>0.002;
+diffLight.scale.y=Math.max(F-B,0.0005);diffLight.position.y=TOP-B-(F-B)/2;diffLight.visible=F-B>0.002;
+edge.visible=B>0.002&&F-B>0.05&&cur.l<0.5;edge.position.y=TOP-B-0.045;
+barF.position.y=TOP-H*cur.f-0.01+0.02*(1-cur.f);barB.position.y=TOP-H*cur.b-0.01+0.02*(1-cur.b);
+front.visible=cur.f>0.002;black.visible=cur.b>0.002;
+magF.material.color.set(cur.f>0.995?0xEF9F27:0x888780);magB.material.color.set(cur.b>0.995?0xEF9F27:0x888780);
+const L=Math.max(0.07,1-0.32*cur.f*(1-cur.b)-0.93*cur.b);
+amb.intensity=0.55*L;hemi.intensity=0.35*L;sun.intensity=0.9*L;
+lightM.color.copy(cDay).lerp(cLed,cur.l);darkM.color.copy(cDark).lerp(cLed,cur.l);
+ledM.color.set(cur.l>0.5?0xFFC870:0x666660);ledLight.intensity=1.1*cur.l;
+tmp.copy(cClrDay).lerp(cClrDark,cur.b);renderer.setClearColor(tmp);}
+function txt(){let t=Mo[mode].t;if(led)t='Pełne zaciemnienie z LED. Taśma w kasecie świeci w szczelinę między warstwami i cała perforacja podświetla się ciepłym światłem.';if(cut)t+=' Kaseta jest przezroczysta: widać dwa wałki z silnikami i taśmę LED.';document.getElementById('desc').textContent=t;}
+function setMode(m){mode=m;tgt.f=Mo[m].f;tgt.b=Mo[m].b;if(m!=='ciemno')led=0;tgt.l=led;
+document.querySelectorAll('#b3 button[data-m]').forEach(x=>x.classList.toggle('act',x.dataset.m===m));
+const lb=document.getElementById('led3');lb.disabled=m!=='ciemno';lb.classList.toggle('act',!!led);txt();}
+document.querySelectorAll('#b3 button[data-m]').forEach(x=>x.onclick=()=>setMode(x.dataset.m));
+document.getElementById('led3').onclick=()=>{if(mode!=='ciemno')return;led=led?0:1;tgt.l=led;document.getElementById('led3').classList.toggle('act',!!led);txt();};
+document.getElementById('cut3').onclick=()=>{cut=cut?0:1;const b=document.getElementById('cut3');b.classList.toggle('act',!!cut);b.textContent=cut?'Ukryj wnętrze kasety':'Pokaż wnętrze kasety';cas.material.opacity=cut?0.18:1;cas.material.depthWrite=!cut;txt();};
+let th=0.35,ph=0.08,R=3.2;const target=new THREE.Vector3(0,0.85,-0.08);
+function placeCam(){cam.position.set(target.x+R*Math.sin(th)*Math.cos(ph),target.y+R*Math.sin(ph),target.z+R*Math.cos(th)*Math.cos(ph));cam.lookAt(target);}
+const pts=new Map();let pinch=0;const el=renderer.domElement;
+el.addEventListener('pointerdown',e=>{el.setPointerCapture(e.pointerId);pts.set(e.pointerId,{x:e.clientX,y:e.clientY});el.style.cursor='grabbing';});
+el.addEventListener('pointermove',e=>{if(!pts.has(e.pointerId))return;const p=pts.get(e.pointerId);
+if(pts.size===1){th-=(e.clientX-p.x)*0.006;ph+=(e.clientY-p.y)*0.004;th=Math.max(-1.3,Math.min(1.3,th));ph=Math.max(-0.35,Math.min(0.9,ph));}
+pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
+if(pts.size===2){const a=[...pts.values()];const d=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y);if(pinch)R=Math.max(1.2,Math.min(5.5,R*pinch/d));pinch=d;}});
+const up=e=>{pts.delete(e.pointerId);pinch=0;el.style.cursor='grab';};el.addEventListener('pointerup',up);el.addEventListener('pointercancel',up);
+el.addEventListener('wheel',e=>{e.preventDefault();R=Math.max(1.2,Math.min(5.5,R*(1+e.deltaY*0.001)));},{passive:false});
+let last=performance.now();const SP=0.45;
+function step(v,t,s){return v+Math.sign(t-v)*Math.min(Math.abs(t-v),s);}
+function loop(now){const dt=Math.min(0.05,(now-last)/1000);last=now;
+let tf=tgt.f,tb=tgt.b;
+if(tb>cur.b&&cur.f<0.98)tb=cur.b;
+if(tf<cur.f&&cur.b>0.02)tf=cur.f;
+const of=cur.f,ob=cur.b;cur.f=step(cur.f,tf,SP*dt);cur.b=step(cur.b,tb,SP*dt);
+cur.l=step(cur.l,tgt.l*(cur.b>0.98?1:0),1.2*dt);
+tubeF.rotation.x+=(cur.f-of)*40;tubeB.rotation.x+=(cur.b-ob)*40;
+apply();placeCam();renderer.render(scene,cam);requestAnimationFrame(loop);}
+new ResizeObserver(()=>{renderer.setSize(W(),Hh());cam.aspect=W()/Hh();cam.updateProjectionMatrix();}).observe(wrap);
+setMode('dzien');requestAnimationFrame(loop);
 </script>
 </body>
 </html>
