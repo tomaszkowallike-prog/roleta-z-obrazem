@@ -481,7 +481,7 @@ let T=0,play=true,last=performance.now(),visible=true;
 const cD=new THREE.Color(0xF4EEDF),cK=new THREE.Color(0x121110),cL=new THREE.Color(0xFFC870),k1=new THREE.Color(0x2a2622),k2=new THREE.Color(0x0d0c0a),tmp=new THREE.Color();
 const v3=a=>new THREE.Vector3(a[0],a[1],a[2]);let curStep=-1;
 function frame(){let i=0;while(i<steps.length-1&&T>=starts[i+1])i++;const p=cl((T-starts[i])/steps[i].d);
-const s={cas:0,b:0,f:0,prof:0,mag:0,leak:0,block:0,led:0,snap:0,clip:0};for(let j=0;j<i;j++)steps[j].a(s,1);steps[i].a(s,p);
+const s={cas:0,b:0,f:0,prof:0,mag:0,leak:0,block:0,led:0,snap:0,clip:0};for(let j=0;j<i;j++)steps[j].a(s,1);steps[i].a(s,p);if(i!==5)s.clip=0;
 if(i!==curStep){curStep=i;document.getElementById('iN').textContent='Krok '+(i+1)+' z '+steps.length;document.getElementById('iT').textContent=steps[i].t;document.getElementById('iX').textContent=steps[i].x;}
 [...dots.children].forEach((e,j)=>{e.firstChild.style.width=(j<i?100:j===i?p*100:0)+'%';});
 casG.position.set(0,1.57-(1-ez(s.cas))*.45,(1-ez(s.cas))*.5);
